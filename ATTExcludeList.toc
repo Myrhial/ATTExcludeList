@@ -2,16 +2,16 @@
 ## Version: @project-version@
 ## Title: AllTheThings Exclude List
 ## Notes-enUS: A companion addon for AllTheThings that lets you hide things you don't want to see.
-## Notes-deDE:
-## Notes-esES:
-## Notes-esMX:
-## Notes-frFR:
-## Notes-itIT:
-## Notes-koKR:
-## Notes-ptBR:
-## Notes-ruRU:
-## Notes-zhCN:
-## Notes-zhTW:
+## Notes-deDE: Ein Begleit-Addon für AllTheThings, mit dem Sie Dinge ausblenden können, die Sie nicht sehen möchten.
+## Notes-esES: Un complemento para AllTheThings que le permite ocultar cosas que no desea ver.
+## Notes-esMX: Un complemento para AllTheThings que le permite ocultar cosas que no desea ver.
+## Notes-frFR: Un addon compagnon pour AllTheThings qui vous permet de masquer les éléments que vous ne voulez pas voir.
+## Notes-itIT: Un addon di supporto per AllTheThings che ti consente di nascondere le cose che non vuoi vedere.
+## Notes-koKR: AllTheThings의 동반 애드온으로, 보고 싶지 않은 항목을 숨길 수 있습니다.
+## Notes-ptBR: Um addon acompanhante para AllTheThings que permite ocultar coisas que você não deseja ver.
+## Notes-ruRU: Сопутствующий аддон для AllTheThings, который позволяет скрывать вещи, которые вы не хотите видеть.
+## Notes-zhCN: AllTheThings 的伴随插件，可让您隐藏不想看到的内容。
+## Notes-zhTW: AllTheThings 的伴隨插件，可讓您隱藏不想看到的內容。
 
 ## Author: Myrhial
 ## SavedVariables: ATTExcludeListDB
