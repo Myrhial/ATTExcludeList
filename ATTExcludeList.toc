@@ -1,0 +1,38 @@
+## Interface: 11508, 11509, 20506, 30405, 38001, 40402, 50504, 120100
+## Version: @project-version@
+## Title: AllTheThings Exclude List
+## Notes-enUS: A companion addon for AllTheThings that lets you hide things you don't want to see.
+## Notes-deDE:
+## Notes-esES:
+## Notes-esMX:
+## Notes-frFR:
+## Notes-itIT:
+## Notes-koKR:
+## Notes-ptBR:
+## Notes-ruRU:
+## Notes-zhCN:
+## Notes-zhTW:
+
+## Author: Myrhial
+## SavedVariables: ATTExcludeListDB
+## AddonCompartmentFunc: ATTExcludeList_Click
+## AddonCompartmentFuncOnEnter: ATTExcludeList_OnEnter
+## AddonCompartmentFuncOnLeave: ATTExcludeList_OnLeave
+## IconTexture: Interface\AddOns\ATTExcludeList\ATTExcludeList.blp
+## Dependencies: AllTheThings
+## Group: AllTheThings
+
+# https://warcraft.wiki.gg/wiki/Addon_Categories
+## Category: Collections
+## Category-deDE: Kriegsmeutesammlungen
+## Category-esES: Colecciones de banda guerrera
+## Category-esMX: Colecciones de tropa
+## Category-frFR: Collections du bataillon
+## Category-itIT: Collezioni della Brigata
+## Category-koKR: 전투부대 수집품
+## Category-ptBR: Coleções do Bando de Guerra
+## Category-ruRU: Коллекции отряда
+## Category-zhCN: 战团藏品
+## Category-zhTW: 戰隊收藏
+
+ATTExcludeList.lua
