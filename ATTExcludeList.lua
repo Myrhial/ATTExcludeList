@@ -16,6 +16,16 @@ event:SetScript("OnEvent", function(self, eventName, ...)
 end)
 event:RegisterEvent("ADDON_LOADED")
 
+-- Set item as excluded or not
+local function SetItemExcluded(itemID, excluded)
+	local item = ATTC.SearchForObject("itemID", itemID)
+	if item then
+		item.collectible = not excluded
+		return true
+	end
+	return false
+end
+
 -- Initial load
 function app.Initialise()
 	-- Declare SavedVariables
@@ -25,6 +35,10 @@ function app.Initialise()
 
 	if not ATTExcludeListDB.ExcludeList then
 		ATTExcludeListDB.ExcludeList = {}
+	end
+
+	for _, itemID in ipairs(ATTExcludeListDB.ExcludeList) do
+		SetItemExcluded(itemID, true)
 	end
 end
 
@@ -53,6 +67,8 @@ SlashCmdList["ATTEXCLUDELIST"] = function(msg)
 				end
 			end
 			table.insert(ATTExcludeListDB.ExcludeList, itemID)
+			SetItemExcluded(itemID, true)
+			ATTC.RefreshCollections()
 			print("Added", itemID, "to the exclude list")
 		else
         	print("Could not find a valid item link")
@@ -66,6 +82,8 @@ SlashCmdList["ATTEXCLUDELIST"] = function(msg)
 			for i, id in ipairs(ATTExcludeListDB.ExcludeList) do
 				if id == itemID then
 					table.remove(ATTExcludeListDB.ExcludeList, i)
+					SetItemExcluded(itemID, false)
+					ATTC.RefreshCollections()
 					print("Removed", itemID, "from the exclude list")
 					found = true
 					break
@@ -87,5 +105,5 @@ SlashCmdList["ATTEXCLUDELIST"] = function(msg)
 		end
 		return
 	end
-	print("Usage: /attel [add|remove] <thing link> or /attel print")
+	print("Usage: /attel [add||remove] <thing link> or /attel print")
 end
