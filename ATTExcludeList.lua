@@ -53,7 +53,7 @@ end
 -- Slash command
 -------------------------------------------------------------------------------
 
-SLASH_ATTEXCLUDELIST1 = "/attel"
+SLASH_ATTEXCLUDELIST1 = "/attex"
 SlashCmdList["ATTEXCLUDELIST"] = function(msg)
 	local filter, link = msg:match("^(%S*)%s*(.-)$")
 	-- TODO: Handle other types of links too but we can start with items for now
@@ -105,5 +105,5 @@ SlashCmdList["ATTEXCLUDELIST"] = function(msg)
 		end
 		return
 	end
-	print("Usage: /attel [add||remove] <thing link> or /attel print")
+	print("Usage: /attex [add||remove] <thing link> or /attex print")
 end
