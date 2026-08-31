@@ -15,9 +15,9 @@
 
 ## Author: Myrhial
 ## SavedVariables: ATTExcludeListDB
-## AddonCompartmentFunc: ATTExcludeList_Click
-## AddonCompartmentFuncOnEnter: ATTExcludeList_OnEnter
-## AddonCompartmentFuncOnLeave: ATTExcludeList_OnLeave
+# ## AddonCompartmentFunc: ATTExcludeList_Click
+# ## AddonCompartmentFuncOnEnter: ATTExcludeList_OnEnter
+# ## AddonCompartmentFuncOnLeave: ATTExcludeList_OnLeave
 ## IconTexture: Interface\AddOns\ATTExcludeList\ATTExcludeList.blp
 ## Dependencies: AllTheThings
 ## Group: AllTheThings
