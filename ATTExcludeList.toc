@@ -1,4 +1,4 @@
-## Interface: 11508, 11509, 20506, 30405, 38001, 40402, 50504, 120100
+## Interface: 11509, 16001, 20506, 30405, 38002, 40402, 50504, 120100
 ## Version: @project-version@
 ## Title: AllTheThings Exclude List
 ## Notes-enUS: A companion addon for AllTheThings that lets you hide things you don't want to see.
