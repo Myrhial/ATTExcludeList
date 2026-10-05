@@ -16,14 +16,28 @@ event:SetScript("OnEvent", function(self, eventName, ...)
 end)
 event:RegisterEvent("ADDON_LOADED")
 
--- Set item as excluded or not
-local function SetItemExcluded(itemID, excluded)
-	local item = ATTC.SearchForObject("itemID", itemID)
-	if item then
-		item.collectible = not excluded
-		return true
+local function SetThingsExcluded(things, excluded)
+	if not things then
+		return
 	end
-	return false
+
+	for _, thing in ipairs(things) do
+		if excluded then
+			thing.collectible = false
+		else
+			thing.collectible = nil
+		end
+	end
+end
+
+local function GetThingLink(kind, id)
+	local thing = ATTC.SearchForObject(kind, id)
+	return ATTC:SearchLink({
+		key = kind,
+		searchKey = kind,
+		[kind] = id,
+		text = thing and (thing.text or thing.hash) or (kind .. ":" .. id),
+	})
 end
 
 -- Initial load
@@ -37,9 +51,13 @@ function app.Initialise()
 		ATTExcludeListDB.ExcludeList = {}
 	end
 
-	for _, itemID in ipairs(ATTExcludeListDB.ExcludeList) do
-		SetItemExcluded(itemID, true)
-	end
+	ATTC.AddEventHandler("OnReady", function()
+		for kind, ids in pairs(ATTExcludeListDB.ExcludeList) do
+			for id in pairs(ids) do
+				SetThingsExcluded(ATTC.SearchForObject(kind, id, nil, true), true)
+			end
+		end
+	end)
 end
 
 -- Addon is loaded
@@ -56,54 +74,73 @@ end
 SLASH_ATTEXCLUDELIST1 = "/attex"
 SlashCmdList["ATTEXCLUDELIST"] = function(msg)
 	local filter, link = msg:match("^(%S*)%s*(.-)$")
-	-- TODO: Handle other types of links too but we can start with items for now
 	if filter == "add" and link then
-		local itemID = tonumber(link:match("|Hitem:(%d+)"))
-		if itemID then
-			for _, id in ipairs(ATTExcludeListDB.ExcludeList) do
-				if id == itemID then
-					print(itemID, "is already in the exclude list")
-					return
-				end
-			end
-			table.insert(ATTExcludeListDB.ExcludeList, itemID)
-			SetItemExcluded(itemID, true)
-			ATTC.RefreshCollections()
-			print("Added", itemID, "to the exclude list")
-		else
-        	print("Could not find a valid item link")
+		if not link:find("|H", 1, true) then
+			print("Please provide a thing link")
+			return
 		end
+
+		local things, kind, id = ATTC.SearchForLink(link)
+		if not kind or not id then
+			print("Could not find a valid thing link")
+			return
+		end
+
+		local ids = ATTExcludeListDB.ExcludeList[kind]
+		if ids and ids[id] then
+			print(GetThingLink(kind, id), "is already in the exclude list")
+			return
+		end
+
+		if not ids then
+			ids = {}
+			ATTExcludeListDB.ExcludeList[kind] = ids
+		end
+		ids[id] = true
+		SetThingsExcluded(things, true)
+		ATTC.RefreshCollections()
+		print("Added", GetThingLink(kind, id), "to the exclude list")
 		return
 	end
 	if filter == "remove" and link then
-		local itemID = tonumber(link:match("|Hitem:(%d+)"))
-		if itemID then
-			local found = false
-			for i, id in ipairs(ATTExcludeListDB.ExcludeList) do
-				if id == itemID then
-					table.remove(ATTExcludeListDB.ExcludeList, i)
-					SetItemExcluded(itemID, false)
-					ATTC.RefreshCollections()
-					print("Removed", itemID, "from the exclude list")
-					found = true
-					break
-				end
-			end
-			if not found then
-				print(itemID, "was not found in the exclude list")
-			end
+		if not link:find("|H", 1, true) then
+			print("Please provide a thing link")
+			return
 		end
+
+		local things, kind, id = ATTC.SearchForLink(link)
+		if not kind or not id then
+			print("Could not find a valid thing link")
+			return
+		end
+
+		local ids = ATTExcludeListDB.ExcludeList[kind]
+		if not ids or not ids[id] then
+			print(GetThingLink(kind, id), "was not found in the exclude list")
+			return
+		end
+
+		ids[id] = nil
+		if not next(ids) then
+			ATTExcludeListDB.ExcludeList[kind] = nil
+		end
+		SetThingsExcluded(things, false)
+		ATTC.RefreshCollections()
+		print("Removed", GetThingLink(kind, id), "from the exclude list")
 		return
 	end
 	if filter == "print" then
-		if #ATTExcludeListDB.ExcludeList == 0 then
-			print("The exclude list is empty")
-		else
-			for i = 1, #ATTExcludeListDB.ExcludeList, 1 do
-				print(ATTExcludeListDB.ExcludeList[i])
+		local hasExclusions = false
+		for kind, ids in pairs(ATTExcludeListDB.ExcludeList) do
+			for id in pairs(ids) do
+				print(GetThingLink(kind, id))
+				hasExclusions = true
 			end
+		end
+		if not hasExclusions then
+			print("The exclude list is empty")
 		end
 		return
 	end
-	print("Usage: /attex [add||remove] <thing link> or /attex print")
+	print("Usage: /attex [add|remove] <thing link> or /attex print")
 end
